@@ -47,6 +47,9 @@ def get_report_pdf_result(
         from weasyprint import HTML as WeasyHTML
     except ImportError:
         return None, "missing_weasyprint"
+    except OSError:
+        # WeasyPrint is installed but native deps (Pango, GLib/gobject, etc.) are missing
+        return None, "render_failed"
     try:
         html = _render_html(profile_data, source_name)
         return WeasyHTML(string=html).write_pdf(), None
