@@ -73,7 +73,7 @@ Deliverables:
 pip install -r requirements.txt
 ```
 
-**Production / VPS (runtime only):**
+**Production (runtime only):**
 
 ```bash
 pip install -r requirements-prod.txt
@@ -145,7 +145,5 @@ The Streamlit app **does not** write reports to a fixed folder; HTML/PDF are bui
 ---
 
 **Project status, code map, and next steps:** [docs/PROJECT.md](docs/PROJECT.md)
-
-**Self-hosting (VPS, own domain, Nginx, HTTPS):** [docs/DEPLOY_VPS.md](docs/DEPLOY_VPS.md)
 
 *Automated Dataset Profiling & Reporting.*

@@ -5,3 +5,4 @@ venv/
 *.pyc
 .env
 artifacts/reports/*.html
+templates/

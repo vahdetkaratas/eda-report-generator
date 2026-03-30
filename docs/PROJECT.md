@@ -46,7 +46,6 @@ This file is the single place to track **what is done, where to look, and what t
 | UI (upload, Excel sheet, sidebar limits, sampling choice, target column, downloads) | `src/app.py` |
 | Demo data generation | `scripts/generate_demo_data.py` |
 | New warning / note rule | `src/profile.py` → `build_warnings()` (feeds `warnings` + `quick_notes` in `run_full_profile`) |
-| VPS deploy (Nginx, TLS, systemd) | **docs/DEPLOY_VPS.md** |
 
 ---
 
