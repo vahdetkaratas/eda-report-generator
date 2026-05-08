@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EDA profile report{% if source_name and source_name != "—" %} — {{ source_name }}{% endif %}</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #fff;
+      --text: #1a2130;
+      --muted: #5a6578;
+      --border: #d8dfe9;
+      --accent: #b8860b;
+      --crit: #b00020;
+      --warn: #8d6e00;
+      --info: #1565c0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 1.5rem;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text);
+      background: var(--bg);
+    }
+    h1 { font-size: 1.35rem; margin: 0 0 0.5rem; }
+    h2 {
+      font-size: 1rem;
+      margin: 2rem 0 0.75rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 2px solid var(--accent);
+      color: var(--text);
+    }
+    .meta, .muted { color: var(--muted); font-size: 0.875rem; }
+    .banner {
+      background: #fff8e6;
+      border: 1px solid #ffd54f;
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      margin: 1rem 0;
+    }
+    section.card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+    ul.exec, ul.quick { margin: 0.25rem 0 0; padding-left: 1.25rem; }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.8125rem;
+      margin-top: 0.5rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.5rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #eef2f9; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafbfe; }
+    .corr-strong { background: #fff3cd; font-weight: 600; }
+    .lvl-critical { border-left: 4px solid var(--crit); }
+    .lvl-warning { border-left: 4px solid var(--warn); }
+    .lvl-info { border-left: 4px solid var(--info); }
+    .warn-table td { vertical-align: top; }
+    .hist-block { margin: 1.25rem 0; padding-bottom: 0.75rem; border-bottom: 1px dashed var(--border); }
+    .hist-block:last-child { border-bottom: none; }
+    .hist-title { font-weight: 600; margin-bottom: 0.35rem; font-size: 0.8125rem; }
+    svg.hist-svg { display: block; max-width: 100%; height: auto; }
+    small.hist-note { color: var(--muted); font-size: 0.75rem; }
+    .sample-wrap { overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>EDA profile report</h1>
+  <p class="meta"><strong>Source:</strong> {{ source_name }} &nbsp;|&nbsp; <strong>Generated:</strong> {{ generated_at }}</p>
+
+  {% if sampled_from is defined and sampled_from and sampled_n is defined and sampled_n %}
+  <div class="banner">
+    This report uses a sample from <strong>{{ sampled_from }}</strong> total rows (profile built on {{ sampled_n }} rows{% if sampled_strategy %}, strategy {{ sampled_strategy }}{% endif %}).
+  </div>
+  {% endif %}
+
+  <section class="card" id="executive-summary">
+    <h2>Executive summary</h2>
+    {% if executive_summary %}
+    <ul class="exec">
+      {% for line in executive_summary %}
+      <li>{{ line }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="muted">No executive summary available.</p>
+    {% endif %}
+  </section>
+
+  <section class="card" id="data-quality">
+    <h2>Data quality snapshot</h2>
+    <p>{{ data_quality.headline if data_quality.headline else "—" }}</p>
+    {% if data_quality %}
+    <table aria-label="Data quality counts">
+      <thead>
+        <tr>
+          <th>High-missing cols</th>
+          <th>Duplicate rows</th>
+          <th>Constant cols</th>
+          <th>Near-constant cols</th>
+          <th>High-cardinality cols</th>
+          <th>ID-like cols</th>
+          <th>Datetime-like cols</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ data_quality.high_missing_column_count }}</td>
+          <td>{{ data_quality.duplicate_row_count }}</td>
+          <td>{{ data_quality.constant_column_count }}</td>
+          <td>{{ data_quality.near_constant_column_count }}</td>
+          <td>{{ data_quality.high_cardinality_column_count }}</td>
+          <td>{{ data_quality.id_like_column_count }}</td>
+          <td>{{ data_quality.datetime_column_count }}</td>
+        </tr>
+      </tbody>
+    </table>
+    {% endif %}
+  </section>
+
+  <section class="card" id="warnings">
+    <h2>Structured warnings</h2>
+    {% if warnings %}
+    <table class="warn-table">
+      <thead><tr><th>Level</th><th>Message</th></tr></thead>
+      <tbody>
+        {% for w in warnings %}
+        <tr class="lvl-{{ w.level }}">
+          <td>{{ w.level }}</td>
+          <td>{{ w.message }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="muted">No warnings recorded.</p>
+    {% endif %}
+  </section>
+
+  <section class="card" id="overview">
+    <h2>Overview</h2>
+    <p><strong>Rows:</strong> {{ overview.row_count }} — <strong>Columns:</strong> {{ overview.column_count }} — <strong>Memory (~):</strong> {{ overview.memory_mb }} MB</p>
+  </section>
+
+  <section class="card" id="sample-rows">
+    <h2>Sample rows</h2>
+    <p class="muted">First {{ sample_rows | length }} row(s).</p>
+    {% if sample_rows %}
+    {% set hdr = sample_rows[0].keys() | list %}
+    <div class="sample-wrap">
+    <table>
+      <thead><tr>{% for h in hdr %}<th>{{ h }}</th>{% endfor %}</tr></thead>
+      <tbody>
+        {% for row in sample_rows %}
+        <tr>
+          {% for h in hdr %}
+          <td>{{ row[h] }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    {% endif %}
+  </section>
+
+  <section class="card" id="schema">
+    <h2>Schema — column types</h2>
+    <table>
+      <thead><tr><th>Column</th><th>Dtype</th><th>Unique count</th></tr></thead>
+      <tbody>
+        {% for s in schema %}
+        <tr><td>{{ s.column }}</td><td><code>{{ s.dtype }}</code></td><td>{{ s.unique_count }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card" id="duplicates">
+    <h2>Duplicate summary</h2>
+    <p>
+      Total rows {{ duplicate_summary.total_rows }},
+      distinct {{ duplicate_summary.unique_rows }},
+      duplicate rows {{ duplicate_summary.duplicate_count }}.
+    </p>
+  </section>
+
+  <section class="card" id="missing">
+    <h2>Missing values</h2>
+    <table>
+      <thead><tr><th>Column</th><th>Missing count</th><th>Missing %</th></tr></thead>
+      <tbody>
+        {% for row in schema %}
+        {% set col = row.column %}
+        <tr><td>{{ col }}</td><td>{{ stats.missing_count[col] }}</td><td>{{ stats.missing_pct[col] }}%</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card" id="column-intelligence">
+    <h2>Column intelligence</h2>
+    <p><strong>Constant:</strong>
+      {% if column_intelligence.constant %}{{ column_intelligence.constant | join(", ") }}{% else %}none{% endif %}</p>
+    <p><strong>Near-constant:</strong></p>
+    {% if column_intelligence.near_constant %}
+    <table><thead><tr><th>Column</th><th>Top value share %</th></tr></thead><tbody>
+      {% for r in column_intelligence.near_constant %}
+      <tr><td>{{ r.column }}</td><td>{{ r.top_value_share_pct }}</td></tr>
+      {% endfor %}
+    </tbody></table>
+    {% else %}<p class="muted">none</p>{% endif %}
+    <p><strong>High-cardinality:</strong></p>
+    {% if column_intelligence.high_cardinality %}
+    <table><thead><tr><th>Column</th><th>Unique ratio</th><th>Unique count</th></tr></thead><tbody>
+      {% for r in column_intelligence.high_cardinality %}
+      <tr><td>{{ r.column }}</td><td>{{ r.unique_ratio }}</td><td>{{ r.unique_count }}</td></tr>
+      {% endfor %}
+    </tbody></table>
+    {% else %}<p class="muted">none</p>{% endif %}
+    <p><strong>ID-like:</strong>
+      {% if column_intelligence.id_like %}{{ column_intelligence.id_like | join(", ") }}{% else %}none{% endif %}</p>
+  </section>
+
+  {% if datetime_profile %}
+  <section class="card" id="datetime">
+    <h2>Datetime profiling</h2>
+    <table>
+      <thead><tr><th>Column</th><th>Min</th><th>Max</th><th>Null %</th><th>Rows</th></tr></thead>
+      <tbody>
+        {% for name, meta in datetime_profile.items() %}
+        <tr>
+          <td>{{ name }}</td>
+          <td>{{ meta.min }}</td>
+          <td>{{ meta.max }}</td>
+          <td>{{ meta.null_pct }}</td>
+          <td>{{ meta.row_count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+  {% endif %}
+
+  {% if distributions.numeric %}
+  <section class="card" id="numeric-distributions">
+    <h2>Numeric distributions</h2>
+    {% for ncol, blob in distributions.numeric.items() %}
+    <div class="hist-block">
+      <div class="hist-title">{{ ncol }}</div>
+      {% set edges = blob.hist_edges %}
+      {% set counts = blob.hist_counts %}
+      {% set hm = blob.hist_max if blob.hist_max else 1 %}
+      {% if counts and counts|length > 0 %}
+      {% set n = counts|length %}
+      {% set W = [560, n * 32 + 40] | min %}
+      {% set H = 88 %}
+      {% set pad_l = 32 %}
+      {% set pad_r = 8 %}
+      {% set pad_b = 20 %}
+      {% set pad_t = 6 %}
+      {% set bw_den = [n, 1] | max %}
+      {% set bw = ((W - pad_l - pad_r) / bw_den) | float %}
+      <svg class="hist-svg" width="{{ W }}" height="{{ H }}" viewBox="0 0 {{ W }} {{ H }}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Histogram for {{ ncol }}">
+        <rect x="0" y="0" width="{{ W }}" height="{{ H }}" fill="#fafbfe" rx="4"/>
+        {% for cnt in counts %}
+        {% set i = loop.index0 %}
+        {% set cntf = cnt | float %}
+        {% set denom = [hm | float, 1.0] | max %}
+        {% set raw = (H - pad_b - pad_t) * (cntf / (denom if denom != 0 else 1.0)) %}
+        {% set bar_h = (0 if (cntf == 0) else (([2.0, raw] | max) if (raw > 0 and raw < 1) else raw)) | float %}
+        {% set x = pad_l + bw * i + 1 %}
+        {% set y = H - pad_b - bar_h %}
+        <rect x="{{ '%.3f'|format(x) }}" y="{{ '%.3f'|format(y) }}" width="{{ '%.3f'|format(bw - 2) }}" height="{{ '%.3f'|format(bar_h) }}" fill="#1976d2" opacity="0.75"/>
+        {% endfor %}
+      </svg>
+      <small class="hist-note">Bins: {{ n }} — max count {{ hm }}</small>
+      {% else %}
+      <p class="muted">Not enough numeric spread for histogram.</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if distributions.categorical %}
+  <section class="card" id="categorical">
+    <h2>Categorical distributions</h2>
+    {% for ccol, cat in distributions.categorical.items() %}
+    <div class="hist-block">
+      <div class="hist-title">{{ ccol }} <span class="muted">(top {{ cat.k }}; coverage {{ cat.top_k_coverage_pct }}%; other {{ cat.other_pct }}%)</span></div>
+      <table><thead><tr><th>Value</th><th>Count</th></tr></thead><tbody>
+        {% for val, ct in cat.counts.items() %}
+        <tr><td>{{ val }}</td><td>{{ ct }}</td></tr>
+        {% endfor %}
+      </tbody></table>
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  <section class="card" id="correlations">
+    <h2>Correlations</h2>
+    {% if correlations and correlations.keys() | list | length %}
+    {% set cols = correlations.keys() | sort %}
+    <div class="sample-wrap">
+    <table>
+      <thead>
+        <tr><th></th>{% for c in cols %}<th>{{ c }}</th>{% endfor %}</tr>
+      </thead>
+      <tbody>
+        {% for r in cols %}
+        <tr>
+          <th>{{ r }}</th>
+          {% for c in cols %}
+          {% set v = correlations[r][c] %}
+          {% set strong = (v == v) and ((v | float) >= corr_strong_abs or (v | float) <= -corr_strong_abs) %}
+          <td{% if strong %} class="corr-strong"{% endif %}>
+            {% if v != v %}—{% else %}{{ "%.4f"|format(v | float) }}{% endif %}
+          </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <p class="muted small">Highlighted when |r| ≥ {{ corr_strong_abs }} (config threshold).</p>
+    {% else %}
+    <p class="muted">No correlation matrix (need at least 2 numeric columns).</p>
+    {% endif %}
+  </section>
+
+  {% if target_summary %}
+  <section class="card" id="target-summary">
+    <h2>Target Summary</h2>
+    <p><strong>Column:</strong> {{ target_summary.column }}
+      (<code>{{ target_summary.dtype }}</code>),
+      missing {{ target_summary.missing_count }} ({{ target_summary.missing_pct }}%).</p>
+    {% if target_summary.n_classes is defined %}
+    <p>Classes: {{ target_summary.n_classes }} — max class {{ target_summary.max_class_pct }}% —
+      {% if target_summary.balanced %}relatively balanced{% else %}possibly imbalanced{% endif %}.</p>
+    {% endif %}
+    <table><thead><tr><th>Value</th><th>Count</th></tr></thead><tbody>
+      {% for val, ct in target_summary.distribution.items() %}
+      <tr><td>{{ val }}</td><td>{{ ct }}</td></tr>
+      {% endfor %}
+    </tbody></table>
+  </section>
+  {% endif %}
+
+  <section class="card" id="quick-notes">
+    <h2>Quick notes</h2>
+    {% if quick_notes %}
+    <ul class="quick">
+      {% for note in quick_notes %}
+      <li>{{ note }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="muted">No quick notes.</p>
+    {% endif %}
+  </section>
+</body>
+</html>

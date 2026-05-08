@@ -5,4 +5,6 @@ venv/
 *.pyc
 .env
 artifacts/reports/*.html
-templates/
+# Keep Jinja report template for runtime (do not ignore tracked file)
+templates/*
+!templates/report.html
