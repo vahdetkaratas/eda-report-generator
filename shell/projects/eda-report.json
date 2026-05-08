@@ -1,0 +1,300 @@
+{
+  "pageTitle": "EDA Report Generator",
+  "title": "EDA Report Generator",
+  "eyebrow": "Portfolio artifact — dataset profiling & export",
+  "summary": "Streamlit upload flow: CSV or Excel is profiled in-session; structured warnings, executive summary, and column intelligence drive a downloadable HTML report with optional PDF. Configurable limits, sampling, and pytest-backed modules.",
+  "metaDescription": "Streamlit EDA profiler: schema, missing values, duplicates, distributions, correlations, data-quality warnings, HTML/PDF export. Not a BI platform.",
+  "heroTitle": "EDA Report Generator",
+  "logoLine1": "EDA",
+  "logoLine2": "Report Generator",
+  "themeColor": "#0f1419",
+  "footerProjectName": "EDA Report Generator",
+  "footerProjectSub": "Streamlit · profiling · HTML / PDF export",
+  "heroNote": "",
+  "stack": ["Streamlit", "Pandas", "Jinja2", "pytest", ".xlsx / CSV"],
+  "projectLinks": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/vahdetkaratas/eda-report-generator",
+      "external": true
+    },
+    {
+      "label": "Live demo",
+      "href": "https://eda.vahdetkaratas.com",
+      "external": true
+    },
+    {
+      "label": "README",
+      "href": "https://github.com/vahdetkaratas/eda-report-generator#readme",
+      "external": true
+    }
+  ],
+  "reviewLinks": [
+    {
+      "label": "GitHub repository",
+      "href": "https://github.com/vahdetkaratas/eda-report-generator",
+      "external": true
+    },
+    {
+      "label": "Live demo",
+      "href": "https://eda.vahdetkaratas.com",
+      "external": true
+    },
+    {
+      "label": "README",
+      "href": "https://github.com/vahdetkaratas/eda-report-generator#readme",
+      "external": true
+    },
+    {
+      "label": "Tests",
+      "href": "https://github.com/vahdetkaratas/eda-report-generator/tree/main/tests",
+      "external": true
+    }
+  ],
+  "relatedMlSystems": [],
+  "relatedDataTools": [],
+  "limitations": [
+    "Interactive demo app: not warehouse-scale profiling or orchestrated ETL.",
+    "Row caps and sampling apply for large uploads; profiles reflect the sampled frame.",
+    "Optional PDF requires WeasyPrint and OS libs on the host.",
+    "Not a BI suite, catalogue, or production data-governance platform."
+  ],
+  "profiles": {
+    "recruiter": {
+      "pageTitle": "EDA Report Generator — proof of work",
+      "eyebrow": "Portfolio artifact — reproducible EDA pipeline",
+      "summary": "End-to-end path I ship: Streamlit ingestion (CSV/.xlsx, sheet pick, UTF-8 + latin-1 CSV fallback), config-driven thresholds, profiling engine (missing, duplicates, distributions, correlations, column intelligence, datetime probe, structured warnings), Jinja HTML report plus optional PDF, and pytest coverage on load/profile/render.",
+      "heroNote": "Static project page: https://eda-report.vahdetkaratas.com — Streamlit demo: https://eda.vahdetkaratas.com (not hosted on this static domain).",
+      "footerProjectSub": "Portfolio · Streamlit demo + report modules · tests",
+      "projectLinks": [
+        {
+          "label": "GitHub",
+          "href": "https://github.com/vahdetkaratas/eda-report-generator",
+          "external": true
+        },
+        {
+          "label": "Live demo",
+          "href": "https://eda.vahdetkaratas.com",
+          "external": true
+        },
+        {
+          "label": "README",
+          "href": "https://github.com/vahdetkaratas/eda-report-generator#readme",
+          "external": true
+        }
+      ],
+      "reviewLinks": [
+        {
+          "label": "GitHub repository",
+          "href": "https://github.com/vahdetkaratas/eda-report-generator",
+          "external": true
+        },
+        {
+          "label": "Live demo",
+          "href": "https://eda.vahdetkaratas.com",
+          "external": true
+        },
+        {
+          "label": "Profile & report code",
+          "href": "https://github.com/vahdetkaratas/eda-report-generator/tree/main/src",
+          "external": true
+        },
+        {
+          "label": "Tests",
+          "href": "https://github.com/vahdetkaratas/eda-report-generator/tree/main/tests",
+          "external": true
+        }
+      ],
+      "relatedMlSystems": [
+        {
+          "label": "Portfolio",
+          "href": "https://vahdetkaratas.com/portfolio",
+          "external": true,
+          "description": "Curated demos and write-ups spanning applied ML and data systems."
+        },
+        {
+          "label": "Batch scoring",
+          "href": "https://batch-scoring.vahdetlabs.com/",
+          "external": true,
+          "description": "Pilot surface for offline or batch inference and score workflows on tabular data."
+        },
+        {
+          "label": "Feature store",
+          "href": "https://feature-store.vahdetlabs.com/",
+          "external": true,
+          "description": "Serving patterns for online and batch features to keep modelling reproducible."
+        },
+        {
+          "label": "VahdetLabs",
+          "href": "https://vahdetlabs.com/",
+          "external": true,
+          "description": "Consulting hub for engagements, pilots, and how teams can engage."
+        },
+        {
+          "label": "Monitoring & data quality",
+          "href": "https://monitoring.vahdetlabs.com/",
+          "external": true,
+          "description": "Health and data-quality viewpoints for pipelines—freshness, regressions, and guardrails."
+        },
+        {
+          "label": "Customer churn prediction",
+          "href": "https://churn.vahdetlabs.com/",
+          "external": true,
+          "description": "Retention-oriented scoring with explanations teams can operationalise quickly."
+        }
+      ],
+      "relatedDataTools": [
+        {
+          "label": "Data cleaning toolkit",
+          "href": "https://data-cleaning.vahdetlabs.com/",
+          "external": true,
+          "description": "Diagnose and tidy messy spreadsheets before deeper analytics investment."
+        },
+        {
+          "label": "EDA report generator",
+          "href": "https://eda-report.vahdetkaratas.com",
+          "external": true,
+          "description": "Static narrative for this project; use the recruiter Streamlit host for uploads."
+        },
+        {
+          "label": "Forecasting demo",
+          "href": "https://forecasting.vahdetlabs.com/",
+          "external": true,
+          "description": "Time-series style demos for forecasting conversations and baseline planning."
+        },
+        {
+          "label": "CSV analytics",
+          "href": "https://ai-analysis.vahdetlabs.com/",
+          "external": true,
+          "description": "Ad hoc exploratory assistance on CSVs—quick answers before heavyweight BI builds."
+        },
+        {
+          "label": "KPI dashboard",
+          "href": "https://kpi-dashboard.vahdetlabs.com/",
+          "external": true,
+          "description": "Executive-friendly KPI summaries for stakeholder readouts."
+        }
+      ],
+      "limitations": [
+        "Demo-scope app with configured max rows/sample size—not designed as enterprise BI.",
+        "Profiling reflects uploaded or sampled rows; tune limits for representative slices.",
+        "PDF is optional and host-dependent (WeasyPrint + system libraries).",
+        "No REST API surface: upload and export flow only through Streamlit."
+      ]
+    },
+    "commercial": {
+      "pageTitle": "First-pass dataset review — VahdetLabs",
+      "eyebrow": "Capability preview — profiling before heavier analytics",
+      "summary": "A scoped utility teams use to ingest a spreadsheet, surface missingness, duplicates, skew, correlation risk, cardinality, and datetime coverage, then download a concise HTML/PDF handoff—before dashboards or modelling spend. Same engine as internal pilots but framed for evaluation on your side.",
+      "heroNote": "Static capability page: https://eda-report.vahdetlabs.com — neutral Streamlit demo: https://eda.vahdetlabs.com.",
+      "footerProjectSub": "Pilot-style · handoff-ready report · no SaaS enclosure",
+      "stack": ["Streamlit pilot", "Pandas profiling", "HTML / PDF summary", ".xlsx / CSV"],
+
+      "projectLinks": [
+        {
+          "label": "Discuss a pilot",
+          "href": "https://vahdetlabs.com/contact",
+          "external": true
+        },
+        {
+          "label": "Live demo",
+          "href": "https://eda.vahdetlabs.com",
+          "external": true
+        },
+        {
+          "label": "VahdetLabs",
+          "href": "https://vahdetlabs.com/",
+          "external": true
+        }
+      ],
+      "reviewLinks": [
+        {
+          "label": "Contact",
+          "href": "https://vahdetlabs.com/contact",
+          "external": true
+        },
+        {
+          "label": "Try the demo",
+          "href": "https://eda.vahdetlabs.com",
+          "external": true
+        },
+        {
+          "label": "VahdetLabs home",
+          "href": "https://vahdetlabs.com/",
+          "external": true
+        }
+      ],
+      "relatedMlSystems": [
+        {
+          "label": "Batch scoring",
+          "href": "https://batch-scoring.vahdetlabs.com/",
+          "external": true,
+          "description": "Pilot surface for offline or batch scoring on tabular data before production rollout."
+        },
+        {
+          "label": "Feature store",
+          "href": "https://feature-store.vahdetlabs.com/",
+          "external": true,
+          "description": "Feature lineage and serving for consistent training-to-production parity."
+        },
+        {
+          "label": "VahdetLabs",
+          "href": "https://vahdetlabs.com/",
+          "external": true,
+          "description": "Primary Labs site—services, pilots, and contact paths for client engagements."
+        },
+        {
+          "label": "Monitoring & data quality",
+          "href": "https://monitoring.vahdetlabs.com/",
+          "external": true,
+          "description": "Operational views aimed at regressions and data-quality vigilance—not a SKU catalogue."
+        },
+        {
+          "label": "Customer churn prediction",
+          "href": "https://churn.vahdetlabs.com/",
+          "external": true,
+          "description": "Interpretable churn risk signals for proactive retention—not black-box SaaS fluff."
+        }
+      ],
+      "relatedDataTools": [
+        {
+          "label": "Data cleaning toolkit",
+          "href": "https://data-cleaning.vahdetlabs.com/",
+          "external": true,
+          "description": "Targeted remediation flows for spreadsheets that block modelling or KPI work."
+        },
+        {
+          "label": "EDA report generator",
+          "href": "https://eda-report.vahdetlabs.com/",
+          "external": true,
+          "description": "You are here—paired with Streamlit uploads on eda.vahdetlabs.com for hands-on profiling."
+        },
+        {
+          "label": "Forecasting demo",
+          "href": "https://forecasting.vahdetlabs.com/",
+          "external": true,
+          "description": "Scenario-style forecasting demos for planners who need directional confidence."
+        },
+        {
+          "label": "CSV analytics",
+          "href": "https://ai-analysis.vahdetlabs.com/",
+          "external": true,
+          "description": "Rapid exploratory turns on CSVs when teams need clarity before dashboards."
+        },
+        {
+          "label": "KPI dashboard",
+          "href": "https://kpi-dashboard.vahdetlabs.com/",
+          "external": true,
+          "description": "Executive KPI storytelling without implying a governed enterprise BI stack."
+        }
+      ],
+      "limitations": [
+        "Not a SaaS product, SKU, or catalogue—evaluation and pilot-context only.",
+        "Not a BI platform: no semantic layer, no governed metric store, no warehouse ingestion.",
+        "Profiles the file you submit under configured size/sampling—not continuous monitoring.",
+        "PDF depends on deployment environment; HTML export is the reliable baseline.",
+        "Not automated ETL orchestration or production data-quality SLA tooling."
+      ]
+    }
+  }
+}

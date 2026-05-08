@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Streamlit EDA profiler: schema, missing values, duplicates, distributions, correlations, data-quality warnings, HTML/PDF export. Not a BI platform.">
+  <meta name="theme-color" content="#0f1419">
+  <title>First-pass dataset review — VahdetLabs</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="shell.css">
+  <link rel="stylesheet" href="demo-content.css">
+</head>
+<body>
+  <div class="shell-outer">
+    <div class="shell-card">
+      <div class="art-info-bar">
+        <div class="art-info-bar-frame">
+          <div class="art-info-bar-header">
+            <button type="button" class="art-info-bar-btn" aria-label="Toggle info" aria-expanded="false">
+              <i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="art-header">
+            <div class="art-avatar">
+              <a href="https://eda-report.vahdetlabs.com" class="art-avatar-curtain">
+                <img src="favicon.svg" alt="VahdetLabs" width="90" height="90">
+                <i class="fas fa-expand" aria-hidden="true"></i>
+              </a>
+              <div class="art-lamp-light">
+                <div class="art-available-lamp"></div>
+              </div>
+            </div>
+            <h5 class="art-name mb-10"><a href="https://eda-report.vahdetlabs.com">VahdetLabs</a></h5>
+            <div class="art-sm-text">ML &amp; data consulting — pragmatic delivery</div>
+            
+          </div>
+
+          <div id="scrollbar2" class="art-scroll-frame">
+            <div class="art-table p-15-15">
+              <ul>
+                <li><h6>Location:</h6><span>Prague, Czech Republic</span></li>
+              </ul>
+            </div>
+
+            <div class="art-ls-divider"></div>
+
+            <div class="art-knowledge-block p-30-15">
+              <h6 class="mb-15">Technical focus</h6>
+              <ul class="art-knowledge-list p-15-0">
+                <li>Operational dataset QA</li>
+<li>Issue discovery worksheets</li>
+<li>Handoff-ready HTML summaries</li>
+<li>Pilot-scale Streamlit tooling</li>
+<li>Responsible scope boundaries</li>
+              </ul>
+            </div>
+
+            <div class="art-knowledge-block p-30-15">
+              <h6 class="mb-15">Next steps</h6>
+              <ul class="art-knowledge-list p-15-0">
+                <li><a href="https://vahdetlabs.com/contact" target="_blank" rel="noopener noreferrer">Contact</a></li>
+<li><a href="https://eda.vahdetlabs.com" target="_blank" rel="noopener noreferrer">Try the demo</a></li>
+<li><a href="https://vahdetlabs.com/" target="_blank" rel="noopener noreferrer">VahdetLabs home</a></li>
+              </ul>
+            </div>
+
+            <div class="art-knowledge-block p-30-15"><h6 class="mb-15">ML systems</h6><ul class="art-knowledge-list p-15-0"><li><a href="https://batch-scoring.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Batch scoring</a>
+<span class="art-sidebar-link-desc">Pilot surface for offline or batch scoring on tabular data before production rollout.</span></li>
+<li><a href="https://feature-store.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Feature store</a>
+<span class="art-sidebar-link-desc">Feature lineage and serving for consistent training-to-production parity.</span></li>
+<li><a href="https://vahdetlabs.com/" target="_blank" rel="noopener noreferrer">VahdetLabs</a>
+<span class="art-sidebar-link-desc">Primary Labs site—services, pilots, and contact paths for client engagements.</span></li>
+<li><a href="https://monitoring.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Monitoring &amp; data quality</a>
+<span class="art-sidebar-link-desc">Operational views aimed at regressions and data-quality vigilance—not a SKU catalogue.</span></li>
+<li><a href="https://churn.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Customer churn prediction</a>
+<span class="art-sidebar-link-desc">Interpretable churn risk signals for proactive retention—not black-box SaaS fluff.</span></li></ul></div><div class="art-knowledge-block p-30-15"><h6 class="mb-15">Data tools</h6><ul class="art-knowledge-list p-15-0"><li><a href="https://data-cleaning.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Data cleaning toolkit</a>
+<span class="art-sidebar-link-desc">Targeted remediation flows for spreadsheets that block modelling or KPI work.</span></li>
+<li><a href="https://eda-report.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">EDA report generator</a>
+<span class="art-sidebar-link-desc">You are here—paired with Streamlit uploads on eda.vahdetlabs.com for hands-on profiling.</span></li>
+<li><a href="https://forecasting.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Forecasting demo</a>
+<span class="art-sidebar-link-desc">Scenario-style forecasting demos for planners who need directional confidence.</span></li>
+<li><a href="https://ai-analysis.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">CSV analytics</a>
+<span class="art-sidebar-link-desc">Rapid exploratory turns on CSVs when teams need clarity before dashboards.</span></li>
+<li><a href="https://kpi-dashboard.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">KPI dashboard</a>
+<span class="art-sidebar-link-desc">Executive KPI storytelling without implying a governed enterprise BI stack.</span></li></ul></div>
+          </div>
+
+          <div class="art-ls-social">
+            <a href="https://vahdetlabs.com/" target="_blank" rel="noopener noreferrer" title="VahdetLabs" aria-label="VahdetLabs"><i class="fas fa-globe" aria-hidden="true"></i></a>
+<a href="https://vahdetlabs.com/contact" target="_blank" rel="noopener noreferrer" title="Contact" aria-label="Contact"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+<a href="https://www.linkedin.com/in/vahdettin-karatas/" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shell-main-wrap" id="shellMainWrap">
+        <div class="shell-mobile-curtain" id="shellMobileCurtain" aria-hidden="true"></div>
+        <div class="shell-main">
+          <main class="shell-scroll" id="shellScroll">
+            <div class="shell-content" id="projectContent">
+              <div class="batch-page">
+                <a class="skip" href="#main">Skip to content</a>
+
+                <div class="wrap">
+                  <header>
+                    <div class="logo" id="top">EDA <span>Report Generator</span></div>
+                    <div class="nav-actions">
+                      <a class="btn btn-primary" href="https://vahdetlabs.com/contact" target="_blank" rel="noopener noreferrer">Discuss a pilot</a>
+<a class="btn btn-ghost" href="https://eda.vahdetlabs.com" target="_blank" rel="noopener noreferrer">Live demo</a>
+<a class="btn btn-ghost" href="https://vahdetlabs.com/" target="_blank" rel="noopener noreferrer">VahdetLabs</a>
+                    </div>
+                  </header>
+
+                  <div id="main">
+                    <section class="hero">
+                      <span class="hero-badge">Capability preview — profiling before heavier analytics</span>
+                      <h1>EDA Report Generator</h1>
+                      <p class="hero-lead">A scoped utility teams use to ingest a spreadsheet, surface missingness, duplicates, skew, correlation risk, cardinality, and datetime coverage, then download a concise HTML/PDF handoff—before dashboards or modelling spend. Same engine as internal pilots but framed for evaluation on your side.</p>
+                      <div class="hero-cta">
+                        <a class="btn btn-primary" href="https://vahdetlabs.com/contact" target="_blank" rel="noopener noreferrer">Discuss a pilot</a>
+<a class="btn btn-ghost" href="https://eda.vahdetlabs.com" target="_blank" rel="noopener noreferrer">Live demo</a>
+<a class="btn btn-ghost" href="https://vahdetlabs.com/" target="_blank" rel="noopener noreferrer">VahdetLabs</a>
+                      </div>
+                      <p class="hero-note">Static capability page: https://eda-report.vahdetlabs.com — neutral Streamlit demo: https://eda.vahdetlabs.com.</p>
+                      <div class="metrics" aria-label="Project facts">
+                        <div><span>Streamlit pilot</span></div>
+<div><span>Pandas profiling</span></div>
+<div><span>HTML / PDF summary</span></div>
+<div><span>.xlsx / CSV</span></div>
+                      </div>
+                    </section>
+
+                    <section id="scope" aria-labelledby="h-scope"><h2 id="h-scope">Limitations &amp; scope</h2><div class="pitch"><ul><li>Not a SaaS product, SKU, or catalogue—evaluation and pilot-context only.</li>
+<li>Not a BI platform: no semantic layer, no governed metric store, no warehouse ingestion.</li>
+<li>Profiles the file you submit under configured size/sampling—not continuous monitoring.</li>
+<li>PDF depends on deployment environment; HTML export is the reliable baseline.</li>
+<li>Not automated ETL orchestration or production data-quality SLA tooling.</li></ul></div></section>
+
+                    <section>
+  <h2>Where this capability page lives</h2>
+  <p><strong>This static overview:</strong> <a href="https://eda-report.vahdetlabs.com">eda-report.vahdetlabs.com</a>.</p>
+  <p><strong>Live Streamlit demo:</strong> <a href="https://eda.vahdetlabs.com">eda.vahdetlabs.com</a> — same neutral app UX; framed here for pilots on the Labs side.</p>
+</section>
+
+<section>
+  <h2>Operational pain first-pass solves</h2>
+  <p>New analytics or modelling work often stalls behind “what exactly is inside this spreadsheet?” Analysts reconcile schema drift, rogue null spikes, stealth duplicate rows, and surprise high-cardinality keys before dashboards or notebooks become trustworthy.</p>
+  <p>The pilot utility showcased here collapses those unknowns quickly: ingest a workbook, skim automated issue cards, skim the HTML summary, escalate only anomalies that materially affect downstream KPI work.</p>
+</section>
+
+<section>
+  <h2>Deliverable reviewers receive</h2>
+  <ul>
+    <li>Executive-style bullets distilled from deterministic warnings—not AI prose placeholders.</li>
+    <li>Data-quality counts (duplicate mass, skinny columns missing half their rows, cardinality flags, inferred datetime readiness).</li>
+    <li>Structured warnings clustered by severity to align triage chatter with engineering language.</li>
+    <li>Downloadable HTML (always) plus PDF when deployment enables WeasyPrint + OS glyphs.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Recommended workflow inside a pilot</h2>
+  <ol>
+    <li>Governed sample or full extract lands in staging.</li>
+    <li>Owner drops the CSV/<code>.xlsx</code> into the hosted demo (or privately deployed instance).</li>
+    <li>Team reviews surfaced warnings plus generated report excerpts before approving deeper SQL/ML spend.</li>
+    <li>Outputs attach to ticket / Confluence-ready HTML without forcing a heavyweight BI rollout.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Commercial positioning &amp; scope guardrails</h2>
+  <p><strong>In scope:</strong> first-pass readability, repeatable HTML/PDF handoff language, deterministic heuristics, pilot-friendly sizing limits.</p>
+  <p><strong>Explicitly out of scope:</strong> continuous metric monitoring, SLA-backed cleansing robots, SaaS metering, curated enterprise catalog semantics, unmanaged production ETL choreography.</p>
+  <p>Contact pathways live on VahdetLabs branded surfaces linked from this page—no recruiter portfolio breadcrumb intentionally ships on the Labs shell.</p>
+</section>
+
+                  </div>
+
+                  <footer class="batch-project-footer">
+                    <p class="name">EDA Report Generator</p>
+                    <p style="margin:0.35rem 0 0;font-size:0.76rem;">Pilot-style · handoff-ready report · no SaaS enclosure</p>
+                  </footer>
+                </div>
+              </div>
+            </div>
+
+            <div class="container-fluid p-30-0">
+              <footer class="footer">
+                <div class="art-copy">© <span id="shellYear"></span> VahdetLabs. All rights reserved.</div>
+                <div class="footer-developer">Dataset profiling pilots before modelling or BI heavy-lift.</div>
+              </footer>
+            </div>
+          </main>
+        </div>
+
+        <aside class="shell-rail" aria-label="Home">
+          <div class="shell-rail-header">
+            <a class="shell-rail-home" href="https://eda-report.vahdetlabs.com" id="shellHomeLink" title="Site home" aria-label="Site home">
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="shell-rail-home-icon">
+                <path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="shell-rail-spacer" aria-hidden="true"></div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script src="shell.js"></script>
+</body>
+</html>

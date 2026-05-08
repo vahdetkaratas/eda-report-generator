@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Streamlit EDA profiler: schema, missing values, duplicates, distributions, correlations, data-quality warnings, HTML/PDF export. Not a BI platform.">
+  <meta name="theme-color" content="#0f1419">
+  <title>EDA Report Generator — proof of work</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="shell.css">
+  <link rel="stylesheet" href="demo-content.css">
+</head>
+<body>
+  <div class="shell-outer">
+    <div class="shell-card">
+      <div class="art-info-bar">
+        <div class="art-info-bar-frame">
+          <div class="art-info-bar-header">
+            <button type="button" class="art-info-bar-btn" aria-label="Toggle info" aria-expanded="false">
+              <i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="art-header">
+            <div class="art-avatar">
+              <a href="https://eda-report.vahdetkaratas.com" class="art-avatar-curtain">
+                <img src="https://vahdetkaratas.com/img/face-1.jpg" alt="Vahdettin Karatas" width="90" height="90">
+                <i class="fas fa-expand" aria-hidden="true"></i>
+              </a>
+              <div class="art-lamp-light">
+                <div class="art-available-lamp"></div>
+              </div>
+            </div>
+            <h5 class="art-name mb-10"><a href="https://eda-report.vahdetkaratas.com">Vahdettin Karatas</a></h5>
+            <div class="art-sm-text">Applied ML &amp; data tooling — reproducible delivery</div>
+            
+          </div>
+
+          <div id="scrollbar2" class="art-scroll-frame">
+            <div class="art-table p-15-15">
+              <ul>
+                <li><h6>Location:</h6><span>Prague, Czech Republic</span></li>
+              </ul>
+            </div>
+
+            <div class="art-ls-divider"></div>
+
+            <div class="art-knowledge-block p-30-15">
+              <h6 class="mb-15">Technical focus</h6>
+              <ul class="art-knowledge-list p-15-0">
+                <li>Streamlit data apps</li>
+<li>Profiling &amp; quality warnings</li>
+<li>HTML/PDF reporting</li>
+<li>Configurable pipelines</li>
+<li>pytest-backed modules</li>
+              </ul>
+            </div>
+
+            <div class="art-knowledge-block p-30-15">
+              <h6 class="mb-15">Review this artifact</h6>
+              <ul class="art-knowledge-list p-15-0">
+                <li><a href="https://github.com/vahdetkaratas/eda-report-generator" target="_blank" rel="noopener noreferrer">GitHub repository</a></li>
+<li><a href="https://eda.vahdetkaratas.com" target="_blank" rel="noopener noreferrer">Live demo</a></li>
+<li><a href="https://github.com/vahdetkaratas/eda-report-generator/tree/main/src" target="_blank" rel="noopener noreferrer">Profile &amp; report code</a></li>
+<li><a href="https://github.com/vahdetkaratas/eda-report-generator/tree/main/tests" target="_blank" rel="noopener noreferrer">Tests</a></li>
+              </ul>
+            </div>
+
+            <div class="art-knowledge-block p-30-15"><h6 class="mb-15">ML systems</h6><ul class="art-knowledge-list p-15-0"><li><a href="https://vahdetkaratas.com/portfolio" target="_blank" rel="noopener noreferrer">Portfolio</a>
+<span class="art-sidebar-link-desc">Curated demos and write-ups spanning applied ML and data systems.</span></li>
+<li><a href="https://batch-scoring.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Batch scoring</a>
+<span class="art-sidebar-link-desc">Pilot surface for offline or batch inference and score workflows on tabular data.</span></li>
+<li><a href="https://feature-store.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Feature store</a>
+<span class="art-sidebar-link-desc">Serving patterns for online and batch features to keep modelling reproducible.</span></li>
+<li><a href="https://vahdetlabs.com/" target="_blank" rel="noopener noreferrer">VahdetLabs</a>
+<span class="art-sidebar-link-desc">Consulting hub for engagements, pilots, and how teams can engage.</span></li>
+<li><a href="https://monitoring.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Monitoring &amp; data quality</a>
+<span class="art-sidebar-link-desc">Health and data-quality viewpoints for pipelines—freshness, regressions, and guardrails.</span></li>
+<li><a href="https://churn.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Customer churn prediction</a>
+<span class="art-sidebar-link-desc">Retention-oriented scoring with explanations teams can operationalise quickly.</span></li></ul></div><div class="art-knowledge-block p-30-15"><h6 class="mb-15">Data tools</h6><ul class="art-knowledge-list p-15-0"><li><a href="https://data-cleaning.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Data cleaning toolkit</a>
+<span class="art-sidebar-link-desc">Diagnose and tidy messy spreadsheets before deeper analytics investment.</span></li>
+<li><a href="https://eda-report.vahdetkaratas.com" target="_blank" rel="noopener noreferrer">EDA report generator</a>
+<span class="art-sidebar-link-desc">Static narrative for this project; use the recruiter Streamlit host for uploads.</span></li>
+<li><a href="https://forecasting.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Forecasting demo</a>
+<span class="art-sidebar-link-desc">Time-series style demos for forecasting conversations and baseline planning.</span></li>
+<li><a href="https://ai-analysis.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">CSV analytics</a>
+<span class="art-sidebar-link-desc">Ad hoc exploratory assistance on CSVs—quick answers before heavyweight BI builds.</span></li>
+<li><a href="https://kpi-dashboard.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">KPI dashboard</a>
+<span class="art-sidebar-link-desc">Executive-friendly KPI summaries for stakeholder readouts.</span></li></ul></div>
+          </div>
+
+          <div class="art-ls-social">
+            <a href="https://github.com/vahdetkaratas" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+<a href="https://www.linkedin.com/in/vahdettin-karatas/" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shell-main-wrap" id="shellMainWrap">
+        <div class="shell-mobile-curtain" id="shellMobileCurtain" aria-hidden="true"></div>
+        <div class="shell-main">
+          <main class="shell-scroll" id="shellScroll">
+            <div class="shell-content" id="projectContent">
+              <div class="batch-page">
+                <a class="skip" href="#main">Skip to content</a>
+
+                <div class="wrap">
+                  <header>
+                    <div class="logo" id="top">EDA <span>Report Generator</span></div>
+                    <div class="nav-actions">
+                      <a class="btn btn-primary" href="https://github.com/vahdetkaratas/eda-report-generator" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a>
+<a class="btn btn-ghost" href="https://eda.vahdetkaratas.com" target="_blank" rel="noopener noreferrer">Live demo</a>
+<a class="btn btn-ghost" href="https://github.com/vahdetkaratas/eda-report-generator#readme" target="_blank" rel="noopener noreferrer">README</a>
+                    </div>
+                  </header>
+
+                  <div id="main">
+                    <section class="hero">
+                      <span class="hero-badge">Portfolio artifact — reproducible EDA pipeline</span>
+                      <h1>EDA Report Generator</h1>
+                      <p class="hero-lead">End-to-end path I ship: Streamlit ingestion (CSV/.xlsx, sheet pick, UTF-8 + latin-1 CSV fallback), config-driven thresholds, profiling engine (missing, duplicates, distributions, correlations, column intelligence, datetime probe, structured warnings), Jinja HTML report plus optional PDF, and pytest coverage on load/profile/render.</p>
+                      <div class="hero-cta">
+                        <a class="btn btn-primary" href="https://github.com/vahdetkaratas/eda-report-generator" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a>
+<a class="btn btn-ghost" href="https://eda.vahdetkaratas.com" target="_blank" rel="noopener noreferrer">Live demo</a>
+<a class="btn btn-ghost" href="https://github.com/vahdetkaratas/eda-report-generator#readme" target="_blank" rel="noopener noreferrer">README</a>
+                      </div>
+                      <p class="hero-note">Static project page: https://eda-report.vahdetkaratas.com — Streamlit demo: https://eda.vahdetkaratas.com (not hosted on this static domain).</p>
+                      <div class="metrics" aria-label="Project facts">
+                        <div><span>Streamlit</span></div>
+<div><span>Pandas</span></div>
+<div><span>Jinja2</span></div>
+<div><span>pytest</span></div>
+                      </div>
+                    </section>
+
+                    <section id="scope" aria-labelledby="h-scope"><h2 id="h-scope">Limitations &amp; scope</h2><div class="pitch"><ul><li>Demo-scope app with configured max rows/sample size—not designed as enterprise BI.</li>
+<li>Profiling reflects uploaded or sampled rows; tune limits for representative slices.</li>
+<li>PDF is optional and host-dependent (WeasyPrint + system libraries).</li>
+<li>No REST API surface: upload and export flow only through Streamlit.</li></ul></div></section>
+
+                    <section>
+  <h2>Hosting &amp; demo URLs</h2>
+  <p><strong>This static write-up:</strong> <a href="https://eda-report.vahdetkaratas.com">eda-report.vahdetkaratas.com</a>.</p>
+  <p><strong>Live Streamlit demo:</strong> <a href="https://eda.vahdetkaratas.com">eda.vahdetkaratas.com</a> (upload, profile, export — not served from the static explanation page).</p>
+</section>
+
+<section>
+  <h2>What ships in this artifact</h2>
+  <p><strong>In scope.</strong> A Streamlit-powered upload path (CSV plus <code>.xlsx</code> via openpyxl), optional target column for ML-ish summaries, environment- and sidebar-driven limits with first-<em>N</em> or stratified sampling for large frames, then an in-memory profile payload consumed by both the UI blocks and the Jinja report template.</p>
+  <p><strong>Profiling surface.</strong> Schema and uniques; duplicate row counts; missing rates; numeric histogram buckets (SVG); categorical top-<em>k</em> with coverage; correlation matrix highlighting tied to configured |<em>r</em>| threshold; structured warnings (<code>build_warnings</code>); derived <code>quick_notes</code>; executive bullets; data-quality headline plus counts; column intelligence (constants, near-constants, cardinality, ID-like hints); conservative datetime probing where names or dtypes warrant it.</p>
+  <p><strong>Export.</strong> HTML string from <code>get_report_html</code>; PDF via optional WeasyPrint when native deps exist (imports now fail soft with <code>OSError</code> so the app survives missing GTK/Pango).</p>
+</section>
+
+<section>
+  <h2>Architecture (high level)</h2>
+  <ul>
+    <li><code>src/app.py</code> — Thin orchestration only: load → optional sample → <code>run_full_profile</code> → downloads.</li>
+    <li><code>src/load.py</code> — CSV UTF-8 / latin-1 fallback; Excel sheet enumeration with openpyxl.</li>
+    <li><code>src/profile.py</code> — Single entry <code>run_full_profile</code> composing schema, duplicates, stats, distributions, correlations, intelligence, warnings, executive summary, artifacts list.</li>
+    <li><code>src/report.py</code> — Renders templates with correlation-highlight threshold mirrored from profiling config constants.</li>
+    <li><code>src/config.py</code> — File limits plus env-backed PROFILE_* knobs (missing thresholds, outliers, correlations, cardinality, …).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Honest boundaries</h2>
+  <p>This codebase is deliberately <strong>not</strong> a warehouse scanner, lineage catalog, or governed semantic layer. It does not ingest streaming tables, lacks multi-tenant auth, does not advertise an external REST/API contract, and is not positioned as unattended production monitoring. It showcases disciplined Python modules, repeatable HTML output, pdf fallbacks you can tune per host.</p>
+</section>
+
+<section>
+  <h2>Regression safety</h2>
+  <p><code>tests/</code> cover CSV load (including latin-1 fallback), xlsx sheets, profiler invariants (including categorical metadata after recent payload slimming), and HTML render smoke including sampling/target metadata assertions—use them when extending prompts or thresholds.</p>
+</section>
+
+                  </div>
+
+                  <footer class="batch-project-footer">
+                    <p class="name">EDA Report Generator</p>
+                    <p style="margin:0.35rem 0 0;font-size:0.76rem;">Portfolio · Streamlit demo + report modules · tests</p>
+                  </footer>
+                </div>
+              </div>
+            </div>
+
+            <div class="container-fluid p-30-0">
+              <footer class="footer">
+                <div class="art-copy">© <span id="shellYear"></span> Vahdettin Karatas. All rights reserved.</div>
+                <div class="footer-developer">EDA automation, deterministic warnings, reproducible exports.</div>
+              </footer>
+            </div>
+          </main>
+        </div>
+
+        <aside class="shell-rail" aria-label="Home">
+          <div class="shell-rail-header">
+            <a class="shell-rail-home" href="https://eda-report.vahdetkaratas.com" id="shellHomeLink" title="Site home" aria-label="Site home">
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="shell-rail-home-icon">
+                <path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="shell-rail-spacer" aria-hidden="true"></div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script src="shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<section>
+  <h2>Hosting &amp; demo URLs</h2>
+  <p><strong>This static write-up:</strong> <a href="https://eda-report.vahdetkaratas.com">eda-report.vahdetkaratas.com</a>.</p>
+  <p><strong>Live Streamlit demo:</strong> <a href="https://eda.vahdetkaratas.com">eda.vahdetkaratas.com</a> (upload, profile, export — not served from the static explanation page).</p>
+</section>
+
+<section>
+  <h2>What ships in this artifact</h2>
+  <p><strong>In scope.</strong> A Streamlit-powered upload path (CSV plus <code>.xlsx</code> via openpyxl), optional target column for ML-ish summaries, environment- and sidebar-driven limits with first-<em>N</em> or stratified sampling for large frames, then an in-memory profile payload consumed by both the UI blocks and the Jinja report template.</p>
+  <p><strong>Profiling surface.</strong> Schema and uniques; duplicate row counts; missing rates; numeric histogram buckets (SVG); categorical top-<em>k</em> with coverage; correlation matrix highlighting tied to configured |<em>r</em>| threshold; structured warnings (<code>build_warnings</code>); derived <code>quick_notes</code>; executive bullets; data-quality headline plus counts; column intelligence (constants, near-constants, cardinality, ID-like hints); conservative datetime probing where names or dtypes warrant it.</p>
+  <p><strong>Export.</strong> HTML string from <code>get_report_html</code>; PDF via optional WeasyPrint when native deps exist (imports now fail soft with <code>OSError</code> so the app survives missing GTK/Pango).</p>
+</section>
+
+<section>
+  <h2>Architecture (high level)</h2>
+  <ul>
+    <li><code>src/app.py</code> — Thin orchestration only: load → optional sample → <code>run_full_profile</code> → downloads.</li>
+    <li><code>src/load.py</code> — CSV UTF-8 / latin-1 fallback; Excel sheet enumeration with openpyxl.</li>
+    <li><code>src/profile.py</code> — Single entry <code>run_full_profile</code> composing schema, duplicates, stats, distributions, correlations, intelligence, warnings, executive summary, artifacts list.</li>
+    <li><code>src/report.py</code> — Renders templates with correlation-highlight threshold mirrored from profiling config constants.</li>
+    <li><code>src/config.py</code> — File limits plus env-backed PROFILE_* knobs (missing thresholds, outliers, correlations, cardinality, …).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Honest boundaries</h2>
+  <p>This codebase is deliberately <strong>not</strong> a warehouse scanner, lineage catalog, or governed semantic layer. It does not ingest streaming tables, lacks multi-tenant auth, does not advertise an external REST/API contract, and is not positioned as unattended production monitoring. It showcases disciplined Python modules, repeatable HTML output, pdf fallbacks you can tune per host.</p>
+</section>
+
+<section>
+  <h2>Regression safety</h2>
+  <p><code>tests/</code> cover CSV load (including latin-1 fallback), xlsx sheets, profiler invariants (including categorical metadata after recent payload slimming), and HTML render smoke including sampling/target metadata assertions—use them when extending prompts or thresholds.</p>
+</section>

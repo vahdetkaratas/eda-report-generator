@@ -1,0 +1,35 @@
+{
+  "name": "VahdetLabs",
+  "identity": "ML & data consulting — pragmatic delivery",
+  "location": "Prague, Czech Republic",
+  "portfolioUrl": "https://eda-report.vahdetlabs.com",
+  "avatarUrl": "favicon.svg",
+  "technicalFocus": [
+    "Operational dataset QA",
+    "Issue discovery worksheets",
+    "Handoff-ready HTML summaries",
+    "Pilot-scale Streamlit tooling",
+    "Responsible scope boundaries"
+  ],
+  "reviewSectionTitle": "Next steps",
+  "relatedSectionTitle": "Related pilots",
+  "footerLabel": "VahdetLabs capability preview",
+  "footerTagline": "Dataset profiling pilots before modelling or BI heavy-lift.",
+  "socialLinks": [
+    {
+      "label": "VahdetLabs",
+      "href": "https://vahdetlabs.com/",
+      "iconClass": "fas fa-globe"
+    },
+    {
+      "label": "Contact",
+      "href": "https://vahdetlabs.com/contact",
+      "iconClass": "fas fa-envelope"
+    },
+    {
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/vahdettin-karatas/",
+      "iconClass": "fab fa-linkedin-in"
+    }
+  ]
+}
