@@ -22,7 +22,7 @@ The Streamlit app and report logic stay in `src/`; this shell only publishes HTM
 | Recruiter Streamlit demo | `eda.vahdetkaratas.com` | `src/` app (deploy separately) |
 | Commercial Streamlit demo | `eda.vahdetlabs.com` | same app image / process, second hostname |
 
-Live demo CTAs in JSON: recruiter → `eda.vahdetkaratas.com`; commercial → `eda.vahdetlabs.com`. Sidebar rail `portfolioUrl`: recruiter profile → `https://eda-report.vahdetkaratas.com`; commercial → `https://eda-report.vahdetlabs.com`.
+Live demo CTAs in JSON: recruiter → `eda.vahdetkaratas.com`; commercial → `eda.vahdetlabs.com`. **Sidebar avatar / identity** use `portfolioUrl` (canonical static write-up URL). **Right rail home icon** uses optional `railHomeUrl`, else falls back to `portfolioUrl`; commercial sets `railHomeUrl` → `https://vahdetlabs.com/`.
 
 ## Files
 

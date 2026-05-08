@@ -180,11 +180,17 @@ async function main() {
     project.footerProjectSub ||
     "Streamlit profiling · HTML / PDF export";
 
+  const railHomeUrl =
+    typeof profile.railHomeUrl === "string" && profile.railHomeUrl.trim()
+      ? profile.railHomeUrl.trim()
+      : profile.portfolioUrl;
+
   const rendered = template
     .replaceAll("{{PAGE_TITLE}}", escapeHtml(pageTitle))
     .replaceAll("{{META_DESCRIPTION}}", escapeHtml(metaDescription))
     .replaceAll("{{THEME_COLOR}}", escapeHtml(themeColor))
     .replaceAll("{{PORTFOLIO_URL}}", escapeHtml(profile.portfolioUrl))
+    .replaceAll("{{RAIL_HOME_URL}}", escapeHtml(railHomeUrl))
     .replaceAll("{{AVATAR_URL}}", escapeHtml(profile.avatarUrl))
     .replaceAll("{{PROFILE_NAME}}", escapeHtml(profile.name))
     .replaceAll("{{PROFILE_IDENTITY}}", escapeHtml(profile.identity))
@@ -216,10 +222,6 @@ async function main() {
     )
     .replaceAll("{{PROJECT_HERO_TITLE}}", escapeHtml(heroTitle))
     .replaceAll("{{PROJECT_SUMMARY}}", escapeHtml(project.summary))
-    .replaceAll(
-      "{{HERO_CTA_BUTTONS}}",
-      ctaButtons(project.projectLinks || [])
-    )
     .replaceAll("{{HERO_NOTE_HTML}}", heroNoteHtml(project.heroNote))
     .replaceAll("{{METRICS_ITEMS}}", metricsFromStack(project.stack || []))
     .replaceAll(
